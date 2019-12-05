@@ -1,0 +1,95 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "workspaceName": {
+            "type": "string",
+            "metadata": {
+                "description": "Log Analytics workspace name for the Log Analytics workspace to which logs will be sent."
+            }
+        },
+        "workspaceResourceGroup": {
+            "type": "string",
+            "metadata": {
+                "description": "The resource group the Log Analytics workspace sits under."
+            }
+        },
+        "workspaceSubscription": {
+            "type": "string",
+            "metadata": {
+                "description": "The subscription the Log Analytics workspace sits under."
+            }
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "name": "diag-serviceresourcehealth",
+            "type": "microsoft.insights/diagnosticSettings",
+            "apiVersion": "2017-05-01-preview",
+            "properties": {
+                "metrics": [],
+                "logs": [
+                    {
+                        "category": "Security",
+                        "enabled": "false",
+                        "retentionPolicy": {
+                            "enabled": false,
+                            "days": 0
+                        }
+                    },
+                    {
+                        "category": "ServiceHealth",
+                        "enabled": "true",
+                        "retentionPolicy": {
+                            "enabled": false,
+                            "days": 0
+                        }
+                    },
+                    {
+                        "category": "Alert",
+                        "enabled": "false",
+                        "retentionPolicy": {
+                            "enabled": false,
+                            "days": 0
+                        }
+                    },
+                    {
+                        "category": "Recommendation",
+                        "enabled": "false",
+                        "retentionPolicy": {
+                            "enabled": false,
+                            "days": 0
+                        }
+                    },
+                    {
+                        "category": "Policy",
+                        "enabled": "false",
+                        "retentionPolicy": {
+                            "enabled": false,
+                            "days": 0
+                        }
+                    },
+                    {
+                        "category": "Autoscale",
+                        "enabled": "false",
+                        "retentionPolicy": {
+                            "enabled": false,
+                            "days": 0
+                        }
+                    },
+                    {
+                        "category": "ResourceHealth",
+                        "enabled": "true",
+                        "retentionPolicy": {
+                            "enabled": false,
+                            "days": 0
+                        }
+                    }
+                ],
+                "workspaceId": "[concat('/subscriptions/',parameters('workspaceSubscription'),'/resourceGroups/',parameters('workspaceResourceGroup'),'/providers/Microsoft.OperationalInsights/workspaces/',parameters('workspaceName'))]",
+                "logAnalyticsDestinationType": null
+            }
+        }
+    ]
+}
